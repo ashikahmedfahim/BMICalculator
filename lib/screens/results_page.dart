@@ -1,16 +1,23 @@
 import 'package:bmi_calculator/constants.dart';
 import 'package:flutter/material.dart';
-import 'reuseable_card.dart';
-import 'bottom_button.dart';
+import '../components/reuseable_card.dart';
+import '../components/bottom_button.dart';
 
 class ResultPage extends StatelessWidget {
-  const ResultPage({Key key}) : super(key: key);
+  ResultPage({this.bmiResult, this.textResult, this.interpretationResult});
+
+  final String bmiResult;
+  final String textResult;
+  final String interpretationResult;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('BMI CALCULATOR'),
+        title: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 53.0),
+          child: Text('BMI CALCULATOR'),
+        ),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -18,6 +25,8 @@ class ResultPage extends StatelessWidget {
         children: [
           Expanded(
             child: Container(
+              padding: EdgeInsets.all(15.0),
+              alignment: Alignment.bottomCenter,
               child: Text(
                 'Your Result',
                 style: kTitleTextStyle,
@@ -33,22 +42,29 @@ class ResultPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      'Normal',
+                      textResult.toUpperCase(),
                       style: kResultTextStyle,
                     ),
                     Text(
-                      '28',
+                      bmiResult,
                       style: kBMITextStyle,
                     ),
-                    Text(
-                      'Your BMI Result is quite low',
-                      style: kBodyTextStyle,
-                      textAlign: TextAlign.center,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        interpretationResult,
+                        style: kBodyTextStyle,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ],
                 ),
               )),
-          BottomButton(onTap: () {}, buttonTitle: 'RE-CALCULATE')
+          BottomButton(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              buttonTitle: 'RE-CALCULATE')
         ],
       ),
     );
